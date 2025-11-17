@@ -19,9 +19,6 @@ from tasks import (
     create_answer_task,
 )
 
-# -------------------------
-# Build your pipeline once
-# -------------------------
 
 router_agent = create_router_agent()
 retriever_agent = create_retriever_agent()
@@ -41,9 +38,6 @@ rag_crew = Crew(
     verbose=True,
 )
 
-# -------------------------
-# Define the Gradio function
-# -------------------------
 
 def ask_question(user_question):
     start = time.time()
@@ -51,9 +45,6 @@ def ask_question(user_question):
     end = time.time()
     return f"⏱ Time: {end-start:.2f} sec\n\n📌 Answer:\n{result}"
 
-# -------------------------
-# Build Gradio UI
-# -------------------------
 
 interface = gr.Interface(
     fn=ask_question,
@@ -78,5 +69,6 @@ if __name__ == "__main__":
     server_port=7860,
     inbrowser=True
 )
+
 
 
