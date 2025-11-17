@@ -6,16 +6,13 @@ from sentence_transformers import CrossEncoder
 from langchain_community.tools.tavily_search import TavilySearchResults
 from config import TAVILY_API_KEY
 
-# === 1. Load PDF ===
 loader = PyPDFLoader("data/attention_is_all_you_need.pdf")
 docs = loader.load()
 
-# === 2. Embeddings & Vector Store ===
 embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
 vectorstore = Chroma.from_documents(docs, embeddings)
 base_retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
 
-# === 3. Re-Ranker Setup ===
 cross_encoder = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 
 class SimpleCrossEncoderReranker:
@@ -58,3 +55,4 @@ def web_search_tool(query: str) -> str:
         f"Title: {res.get('title', 'N/A')}\nURL: {res.get('url', 'N/A')}\nContent: {res.get('content', 'N/A')}"
         for res in results
     ])
+
