@@ -1,6 +1,5 @@
 from crewai import Task
 
-# 🧭 Router Task — يقرر هل نستخدم الـ Vectorstore أو Web Search
 def create_router_task(router_agent):
     return Task(
         description=(
@@ -21,7 +20,6 @@ def create_router_task(router_agent):
         agent=router_agent,
     )
 
-# 🔍 Retriever Task — يستخدم أداة حسب مخرجات الراوتر
 def create_retriever_task(retriever_agent, router_task, rag_tool, web_search_tool):
     return Task(
         description=(
@@ -41,7 +39,6 @@ def create_retriever_task(retriever_agent, router_task, rag_tool, web_search_too
         tools=[rag_tool, web_search_tool],
     )
 
-# 🧮 Grader Task — يقيم مدى الصلة بين السؤال والمحتوى
 def create_grader_task(grader_agent, retriever_task):
     return Task(
         description=(
@@ -57,7 +54,6 @@ def create_grader_task(grader_agent, retriever_task):
         context=[retriever_task],
     )
 
-# 🤖 Hallucination Checker — يتحقق إن الإجابة مدعومة بمصادر فعلية
 def create_hallucination_task(hallucination_grader, grader_task):
     return Task(
         description=(
@@ -73,7 +69,6 @@ def create_hallucination_task(hallucination_grader, grader_task):
         context=[grader_task],
     )
 
-# 🧩 Final Answer Task — ينتج النتيجة النهائية بناءً على نتيجة الـ hallucination
 def create_answer_task(answer_grader, hallucination_task, retriever_task, web_search_tool):
     return Task(
         description=(
@@ -91,6 +86,7 @@ def create_answer_task(answer_grader, hallucination_task, retriever_task, web_se
     "If the context does not contain the answer, do not fabricate one."
         ),
         agent=answer_grader,
-        context=[hallucination_task, retriever_task],  # ← الإضافة الحاسمة
+        context=[hallucination_task, retriever_task], 
         tools=[web_search_tool],
+
     )
