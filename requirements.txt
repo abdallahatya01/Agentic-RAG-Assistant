@@ -1,0 +1,13 @@
+crewai
+langchain
+langchain-community
+langchain-chroma
+langchain-groq
+langchain-huggingface
+sentence-transformers
+chromadb
+pypdf
+gradio
+tavily-python
+huggingface-hub
+requests
