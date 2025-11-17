@@ -64,7 +64,7 @@ interface = gr.Interface(
     ),
     outputs=gr.Textbox(
         label="Chatbot Response",
-        lines=20,          # الحجم الجديد
+        lines=20,           
         max_lines=40,
         show_copy_button=True,
     ),
@@ -78,4 +78,5 @@ if __name__ == "__main__":
     server_port=7860,
     inbrowser=True
 )
+
 
